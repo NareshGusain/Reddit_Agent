@@ -1,0 +1,7 @@
+requests
+smtplib
+nltk
+pandas
+numpy
+transformers
+fpdf
