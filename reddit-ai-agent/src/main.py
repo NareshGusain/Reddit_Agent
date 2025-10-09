@@ -1,6 +1,6 @@
 # Example main script to fetch, analyze, and print Reddit pain points
-from reddit.fetcher import RedditFetcher
-from analysis.problem_identifier import ProblemIdentifier
+from fetcher import RedditFetcher
+from problem_identifier import ProblemIdentifier
 from dotenv import load_dotenv
 from fpdf import FPDF
 import os
@@ -36,7 +36,8 @@ def main():
     reddit_client_id = os.getenv('REDDIT_CLIENT_ID')
     reddit_client_secret = os.getenv('REDDIT_CLIENT_SECRET')
     reddit_user_agent = os.getenv('REDDIT_USER_AGENT')
-    openai_api_key = os.getenv('OPENAI_API_KEY')
+    openai_api_key = os.getenv('GROQ_API_KEY')
+
     subreddits = ['SaaS', 'startups', 'StartUpIndia','indianstartups']
 
     fetcher = RedditFetcher(reddit_client_id, reddit_client_secret, reddit_user_agent)

@@ -7,7 +7,7 @@ class RedditFetcher:
                                   client_secret=client_secret,
                                   user_agent=user_agent)
 
-    def fetch_posts(self, subreddits: list, min_upvotes: int = 50, days: int = 7, limit: int = 100):
+    def fetch_posts(self, subreddits: list, min_upvotes: int = 20, days: int = 7, limit: int = 100):
         all_posts = []
         since = datetime.utcnow() - timedelta(days=days)
         for subreddit in subreddits:
