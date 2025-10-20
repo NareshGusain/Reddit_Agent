@@ -1,0 +1,39 @@
+Perfect 👍 Since your project is **Reddit AI Agent**, and your current structure + codebase includes modules like `fetcher.py`, `problem_identifier.py`, and `sender.py`, here’s **how you can describe it in your resume** — with **2 versions** (short for bullet points and detailed for project section).
+
+---
+
+### 🧠 **Short Resume Points (under “Projects” section)**
+
+**Reddit AI Agent | Python, PRAW, OpenAI API, smtplib**
+
+* Developed an intelligent Reddit monitoring agent that automatically fetches trending posts from selected subreddits.
+* Implemented AI-driven summarization and topic classification using OpenAI APIs to generate concise daily insights.
+* Automated daily report generation in PDF format and email delivery via Gmail/Outlook integration.
+* Modularized code into fetcher, analyzer, and sender modules for clean maintainability.
+
+---
+
+### 📄 **Detailed Description (for a full project entry or LinkedIn)**
+
+**Reddit AI Agent — Intelligent Reddit Post Analyzer & Reporter**
+*Tech Stack:* Python, PRAW, OpenAI API, smtplib, FPDF, dotenv
+
+* Designed and built a Reddit automation system that fetches trending discussions from specified subreddits using the PRAW (Python Reddit API Wrapper).
+* Integrated OpenAI-based text summarization and keyword extraction to identify high-value insights from large Reddit threads.
+* Created a reporting module that generates a structured PDF summary of insights and automatically emails it to recipients via Gmail or Outlook.
+* Used `.env` configuration for secure credential management and modularized components (`fetcher`, `problem_identifier`, `sender`) for scalability.
+* Deployed automation as a scheduled script to generate and send daily digest reports without manual intervention.
+
+---
+
+### 💡 **Optional “Highlights” section (for an extra wow factor)**
+
+* AI-driven summarization pipeline (LLM integration)
+* PDF report auto-generation with timestamped summaries
+* Secure mail automation (OAuth / SMTP setup for Gmail & Outlook)
+* Environment-based modular structure with reusable components
+
+---
+
+Would you like me to tailor it for **TCS Digital-level resume (ATS-optimized, technical-heavy)** or **a hackathon/startup-style resume (creative + AI focus)**?
+I can rewrite it accordingly.

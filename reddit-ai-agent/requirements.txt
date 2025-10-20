@@ -6,3 +6,4 @@ numpy
 transformers
 fpdf
 reportlab
+streamlit

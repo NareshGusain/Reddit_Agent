@@ -1,55 +1,50 @@
-# Example main script to fetch, analyze, and print Reddit pain points
 from fetcher import RedditFetcher
 from problem_identifier import ProblemIdentifier
+from sender import EmailSender
 from dotenv import load_dotenv
-from fpdf import FPDF
 import os
-import sys
-# from email.sender import EmailSender  # Uncomment when implementing email
 
 load_dotenv()
 
-def save_summary_to_pdf(summary, filename="reddit_report.pdf"):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", "B", 16)
-    pdf.cell(0, 10, "Weekly Reddit Pain Points Report", ln=True, align="C")
-    pdf.ln(10)
-
-    pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, "Summary of top 5 recurring pain points identified from Reddit communities:\n", align="L")
-    pdf.ln(5)
-
-    # Split summary into lines for bullet points if needed
-    for idx, line in enumerate(summary.split('\n')):
-        if line.strip():
-            pdf.set_font("Arial", "B", 12)
-            pdf.cell(10, 10, f"{idx+1}.", ln=0)
-            pdf.set_font("Arial", size=12)
-            pdf.multi_cell(0, 10, line.strip())
-            pdf.ln(2)
-
-    pdf.output(filename)
-
 def main():
-    # TODO: Replace with your actual credentials and subreddits
     reddit_client_id = os.getenv('REDDIT_CLIENT_ID')
     reddit_client_secret = os.getenv('REDDIT_CLIENT_SECRET')
     reddit_user_agent = os.getenv('REDDIT_USER_AGENT')
-    openai_api_key = os.getenv('GROQ_API_KEY')
 
-    subreddits = ['SaaS', 'startups', 'StartUpIndia','indianstartups']
+    subreddits = ['NAME_OF_SUBREDDIT']  # Replace with actual subreddit names
 
     fetcher = RedditFetcher(reddit_client_id, reddit_client_secret, reddit_user_agent)
     posts = fetcher.fetch_posts(subreddits)
 
+    if not posts:
+        print("No posts fetched. Exiting.")
+        return
+
     identifier = ProblemIdentifier()
     summary = identifier.identify_problems(posts)
 
-    print("Weekly Reddit Pain Points Summary:\n")
+    print("🧠 Summary of Reddit Pain Points:\n")
     print(summary)
-    # TODO: Format and send email with summary
-    save_summary_to_pdf(summary)
+
+    posts_pdf_path = identifier.save_combined_text_pdf(posts, output_path=os.path.abspath("reddit_raw_posts.pdf"))
+    summary_pdf_path = identifier.save_summary_pdf(summary, output_path=os.path.abspath("reddit_summary_report.pdf"))
+
+    # Debug checks for attachments
+    for p in (posts_pdf_path, summary_pdf_path):
+        exists = os.path.exists(p)
+        size = os.path.getsize(p) if exists else 0
+        print(f"Attachment check -> {p} | exists: {exists} | size: {size} bytes")
+
+    pdf_paths = [p for p in (posts_pdf_path, summary_pdf_path) if os.path.exists(p)]
+    print("Final attachments to send:", pdf_paths)
+
+    sender = EmailSender(use_outlook=False)
+    sender.send_email(
+        subject="Weekly Reddit Pain Points Report",
+        body="Hi Team,\n\nPlease find attached the latest Reddit insights report.\n\nBest,\nReddit AI Agent 🤖",
+        to_emails=["email@gmail.com"],
+        pdf_paths=pdf_paths
+    )
 
 if __name__ == "__main__":
     main()
